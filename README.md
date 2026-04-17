@@ -1,60 +1,25 @@
-Pharmacy Management System
-A web-based application designed to streamline pharmacy operations, including inventory management, sales tracking, and database administration. Built using Python (Flask) and MySQL.
+Pharmacy Management System 
+A web-based Python (Flask) & MySQL application designed to automate pharmacy inventory and sales operations using an MVC architecture.
 
-🚀 Features
-Inventory Management: Add, update, and track medicine stock.
+✨ Key Features
+Inventory: Real-time stock tracking, expiry management, and low-stock alerts.
 
-Database Integration: Secure storage of records using MySQL.
+Billing: Automated tax/total calculations and searchable transaction history.
 
-Web Interface: User-friendly templates for managing pharmacy data.
+Security: Session-based authentication and secure MySQL data storage.
 
-Dependencies Management: Easy setup via requirements.txt.
+UI/UX: Responsive dashboard with quick-search filters and analytical summaries.
 
-🛠️ Tech Stack
-Backend: Python 3.x, Flask
+💻 Technical Stack
+Backend: Flask (Python) handling routing, POST/GET requests, and sessions.
 
-Frontend: HTML/CSS (located in templates and static)
+Database: MySQL (Relational schema for Medicines, Sales, and Users).
 
-Database: MySQL
+Frontend: Jinja2 templates, HTML5, CSS3, and JavaScript for validation.
 
-📦 Installation & Setup
-1. Clone the Repository
-Bash
-git clone https://github.com/Hema7613/Pharmacy-Mangement-System.git
-cd Pharmacy-Mangement-System
-2. Set Up a Virtual Environment (Optional but Recommended)
-Bash
-python -m venv venv
-# Windows
-source venv/Scripts/activate
-# Mac/Linux
-source venv/bin/activate
-3. Install Dependencies
-Bash
-pip install -r requirements.txt
-4. Database Configuration
-Open your MySQL terminal or a tool like phpMyAdmin.
+🚀 Future Roadmap
+Automated expiry email notifications.
 
-Create a new database.
+Wholesale supplier management module.
 
-Import the provided SQL schema:
-
-SQL
-SOURCE pharmacy_db.sql;
-Update the database connection credentials in app.py (username, password, and database name).
-
-5. Run the Application
-Bash
-python app.py
-The application will be available at http://127.0.0.1:5000/.
-
-📁 Project Structure
-app.py: The main Flask application script.
-
-pharmacy_db.sql: Database schema and initial data.
-
-templates/: HTML files for the web interface.
-
-static/: CSS, JavaScript, and image assets.
-
-requirements.txt: List of Python packages required for the project.
+One-click PDF/Excel report generation.
