@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Bills - Siri Medicals</title>
+  <link href="/static/style.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<a href="/dashboard" class="brand"><h1 class="text-center fw-bold mt-4" style="font-size: 42px;">
+    Siri Medicals
+</h1>
+</a>
+
+ <div class="nav-links">
+      <div class="d-flex justify-content-center gap-3 mt-4">
+    <a href="/customers" class="btn btn-primary px-4">Customers</a>
+    <a href="/employees" class="btn btn-primary px-4">Employees</a>
+    <a href="/medicines" class="btn btn-primary px-4">Medicines</a>
+    <a href="/bills" class="btn btn-primary px-4">Bills</a>
+ <a href="/create_bill" class="btn btn-sm btn-success">Create Bill</a>
+      <a href="/login" class="btn btn-outline-secondary btn-sm">Logout</a>
+</div>
+
+     
+    </div>
+  </nav>
+
+
+  <main class="container mt-4">
+    <h3>All Bills</h3>
+    <div id="billsList"></div>
+  </main>
+
+<script src="/static/script.js"></script>
+<script>
+  async function loadBills(){
+    const rows = await fetch('/api/bills').then(r=>r.json());
+    let html = '<table class="table"><tr><th>ID</th><th>Customer</th><th>Employee</th><th>Total</th><th>Date</th><th>Invoice</th></tr>';
+    rows.forEach(b => {
+      html += `<tr><td>${b.bill_id}</td><td>${b.customer_name||'WALK-IN'}</td><td>${b.emp_name||''}</td><td>${b.total_amount}</td><td>${b.bill_date}</td><td><a target="_blank" href="/api/invoice/${b.bill_id}" class="btn btn-sm btn-primary">Open</a></td></tr>`;
+    });
+    html += '</table>'; document.getElementById('billsList').innerHTML = html;
+  }
+  loadBills();
+</script>
+</body>
+</html>

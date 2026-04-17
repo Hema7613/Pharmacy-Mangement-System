@@ -1,0 +1,69 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Create Bill - Siri Medicals</title>
+  <link href="/static/style.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<a href="/dashboard" class="brand"><h1 class="text-center fw-bold mt-4" style="font-size: 42px;">
+    Siri Medicals
+</h1>
+</a>
+
+ <div class="nav-links">
+      <div class="d-flex justify-content-center gap-3 mt-4">
+    <a href="/customers" class="btn btn-primary px-4">Customers</a>
+    <a href="/employees" class="btn btn-primary px-4">Employees</a>
+    <a href="/medicines" class="btn btn-primary px-4">Medicines</a>
+    <a href="/bills" class="btn btn-primary px-4">Bills</a>
+ <a href="/create_bill" class="btn btn-sm btn-success">Create Bill</a>
+      <a href="/login" class="btn btn-outline-secondary btn-sm">Logout</a>
+</div>
+
+     
+    </div>
+  </nav>
+
+
+  <main class="container mt-4">
+    <h3>Create Bill</h3>
+    <div class="row">
+      <div class="col-md-4">
+        <h5>Customer</h5>
+        <input id="custSearch" class="form-control mb-2" placeholder="Search name or phone" oninput="searchCustomerForBill()">
+        <div id="custSearchResults"></div>
+        <div class="mt-3">
+          <h6>Or add new</h6>
+          <input id="newCustName" class="form-control mb-2" placeholder="Name">
+          <input id="newCustPhone" class="form-control mb-2" placeholder="Phone">
+          <button class="btn btn-secondary" onclick="addCustomerFromBill()">Add Customer & Select</button>
+        </div>
+      </div>
+
+      <div class="col-md-8">
+        <h5>Medicines (search and add)</h5>
+        <input id="medSearch" class="form-control mb-2" placeholder="Search medicine" oninput="searchMedicineForBill()">
+        <div id="medSearchResults"></div>
+
+        <div class="card mt-3 p-3">
+          <h6>Cart</h6>
+          <table class="table">
+            <thead><tr><th>Item</th><th>Qty</th><th>Price</th><th>Subtotal</th><th></th></tr></thead>
+            <tbody id="cartBody"></tbody>
+          </table>
+          <div class="text-end">Total: ₹ <span id="cartTotal">0.00</span></div>
+          <div class="text-end mt-2"><button class="btn btn-success" onclick="createBillFromUI()">Create Bill & Print</button></div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+<script src="/static/script.js"></script>
+<script>
+  // page-specific small helpers are in script.js; initialize page state
+  prepareCreateBillPage();
+</script>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Employees - Siri Medicals</title>
+  <link href="/static/style.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<a href="/dashboard" class="brand"><h1 class="text-center fw-bold mt-4" style="font-size: 42px;">
+    Siri Medicals
+</h1>
+</a>
+
+ <div class="nav-links">
+      <div class="d-flex justify-content-center gap-3 mt-4">
+    <a href="/customers" class="btn btn-primary px-4">Customers</a>
+    <a href="/employees" class="btn btn-primary px-4">Employees</a>
+    <a href="/medicines" class="btn btn-primary px-4">Medicines</a>
+    <a href="/bills" class="btn btn-primary px-4">Bills</a>
+ <a href="/create_bill" class="btn btn-sm btn-success">Create Bill</a>
+      <a href="/login" class="btn btn-outline-secondary btn-sm">Logout</a>
+</div>
+
+     
+    </div>
+  </nav>
+
+
+  <main class="container mt-4">
+    <h3>Employees</h3>
+    <div class="row">
+      <div class="col-md-6">
+        <h5>Add Employee</h5>
+        <div class="card p-3">
+          <input id="empName" class="form-control mb-2" placeholder="Full name">
+          <input id="empUser" class="form-control mb-2" placeholder="Username">
+          <input id="empPass" class="form-control mb-2" placeholder="Password" type="password">
+          <button class="btn btn-success" onclick="addEmployeeForm()">Add Employee</button>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <h5>All Employees</h5>
+        <div id="employeesList"></div>
+      </div>
+    </div>
+  </main>
+
+<script src="/static/script.js"></script>
+<script>
+  async function addEmployeeForm(){
+    const name = document.getElementById('empName').value.trim();
+    const username = document.getElementById('empUser').value.trim();
+    const password = document.getElementById('empPass').value.trim();
+    if(!name||!username||!password){ alert('All fields required'); return; }
+    const res = await fetch('/api/employees', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({emp_name:name, username, password})});
+    const d = await res.json();
+    if(d.success){ alert('Employee added'); document.getElementById('empName').value=''; document.getElementById('empUser').value=''; document.getElementById('empPass').value=''; loadEmployees(); } else alert('Error: ' + (d.error||'unknown'));
+  }
+
+  async function loadEmployees(){
+    const rows = await fetch('/api/employee_stats').then(r=>r.json());
+    let html = '<table class="table"><tr><th>ID</th><th>Name</th><th>Username</th><th>Total Bills</th></tr>';
+    rows.forEach(e => html += `<tr><td>${e.emp_id}</td><td>${e.emp_name}</td><td>${e.username}</td><td>${e.total_bills}</td></tr>`);
+    html += '</table>'; document.getElementById('employeesList').innerHTML = html;
+  }
+  loadEmployees();
+</script>
+</body>
+</html>

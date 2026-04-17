@@ -1,0 +1,69 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Customers - Siri Medicals</title>
+  <link href="/static/style.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<a href="/dashboard" class="brand"><h1 class="text-center fw-bold mt-4" style="font-size: 42px;">
+    Siri Medicals
+</h1>
+</a>
+
+  <div class="nav-links">
+      <div class="d-flex justify-content-center gap-3 mt-4">
+    <a href="/customers" class="btn btn-primary px-4">Customers</a>
+    <a href="/employees" class="btn btn-primary px-4">Employees</a>
+    <a href="/medicines" class="btn btn-primary px-4">Medicines</a>
+    <a href="/bills" class="btn btn-primary px-4">Bills</a>
+ <a href="/create_bill" class="btn btn-sm btn-success">Create Bill</a>
+      <a href="/login" class="btn btn-outline-secondary btn-sm">Logout</a>
+</div>
+
+     
+    </div>
+  </nav>
+
+
+  <main class="container mt-4">
+    <h3>Customers</h3>
+    <div class="row">
+      <div class="col-md-6">
+        <h5>Add Customer</h5>
+        <div class="card p-3">
+          <input id="custName" class="form-control mb-2" placeholder="Name">
+          <input id="custPhone" class="form-control mb-2" placeholder="Phone">
+          <button class="btn btn-success" onclick="addCustomerForm()">Add Customer</button>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <h5>All Customers</h5>
+        <div id="customersList"></div>
+      </div>
+    </div>
+  </main>
+
+<script src="/static/script.js"></script>
+<script>
+  async function addCustomerForm(){
+    const name = document.getElementById('custName').value.trim();
+    const phone = document.getElementById('custPhone').value.trim();
+    if(!name){ alert('Name required'); return; }
+    const res = await fetch('/api/customers', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({customer_name:name, phone})});
+    const d = await res.json();
+    if(d.success){ alert('Customer added'); document.getElementById('custName').value=''; document.getElementById('custPhone').value=''; loadCustomers(); }
+    else alert('Error: ' + (d.error||'unknown'));
+  }
+
+  async function loadCustomers(){
+    const rows = await fetch('/api/customer_stats').then(r=>r.json());
+    let html = '<table class="table"><tr><th>ID</th><th>Name</th><th>Phone</th><th>Total Bills</th></tr>';
+    rows.forEach(c => html += `<tr><td>${c.customer_id}</td><td>${c.customer_name}</td><td>${c.phone}</td><td>${c.total_bills}</td></tr>`);
+    html += '</table>'; document.getElementById('customersList').innerHTML = html;
+  }
+  loadCustomers();
+</script>
+</body>
+</html>
